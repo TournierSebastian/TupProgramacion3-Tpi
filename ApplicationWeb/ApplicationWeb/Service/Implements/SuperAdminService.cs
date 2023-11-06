@@ -1,6 +1,12 @@
 ﻿
+using ApplicationWeb.Config;
 using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.Entities;
+using ApplicationWeb.Data.ViewModel;
+using ApplicationWeb.Encrypt;
+using AutoMapper;
+using Azure;
 using Service.IService;
 
 
@@ -9,15 +15,18 @@ namespace ApplicationWeb.Service.Implements
     public class SuperAdminService : ISuperAdminService
     {
         private readonly TiendaContext _TiendaContext;
-
+        private readonly IMapper _mapper;
         public SuperAdminService(TiendaContext TiendaContext)
         {
+    
             _TiendaContext = TiendaContext;
+            _mapper = AutoMapperConfig.Configure();
+
         }
 
-        public DtoUser AddUser(DtoUser user)
+        public DtoUser AddUser(UserViewModel user)
         {
-
+            
             var existingUser = _TiendaContext.DtoUsers
             .FirstOrDefault(u => u.UserName == user.UserName || u.Email == user.Email);
           
@@ -25,18 +34,31 @@ namespace ApplicationWeb.Service.Implements
               && user.UserName != "" && user.Password != "" && existingUser == null)
             {
 
-                _TiendaContext.DtoUsers.Add(user);
+                var Users = new DtoUser
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Password = user.Password.Hash(),
+                    UserType = user.UserType,
+                };
+                _TiendaContext.DtoUsers.Add(Users);
                 _TiendaContext.SaveChanges();
-                return user;
+                return Users;
             }
             return null;
         }
 
         public List<DtoUser> GetAllUser()
         {
-            var user = _TiendaContext.DtoUsers.ToList();
+            List<DtoUser> users = _TiendaContext.DtoUsers.Select(user => new DtoUser
+            {
+                idUser = user.idUser,
+                UserName = user.UserName,
+                Email = user.Email,
+                UserType = user.UserType,
+             }).ToList();
 
-            return user;
+            return users;
 
         }
 

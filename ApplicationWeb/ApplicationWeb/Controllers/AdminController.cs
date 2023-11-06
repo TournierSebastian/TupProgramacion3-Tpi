@@ -1,5 +1,6 @@
 ﻿using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Entities;
+using ApplicationWeb.Data.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +15,10 @@ namespace AplicacionWeb.Controllers
 
     {
         private readonly IAdminService _AdminService;
-       
+
         private readonly ILogger _logger;
 
-        public AdminController(IAdminService adminService,  ILogger<AdminController> logger)
+        public AdminController(IAdminService adminService, ILogger<AdminController> logger)
         {
             _logger = logger;
             _AdminService = adminService;
@@ -25,7 +26,7 @@ namespace AplicacionWeb.Controllers
 
 
         [HttpGet("GetAllProducts")]
-        public ActionResult <List<DtoProducts>> GetAllProducts()
+        public ActionResult<List<DtoProducts>> GetAllProducts()
         {
             try
             {
@@ -63,11 +64,11 @@ namespace AplicacionWeb.Controllers
                 {
                     var Response = _AdminService.GetProductsById(id);
 
-                if (Response == null)
-                {
-                    return NotFound("Product Not Found");
-                }
-                return Ok(Response);
+                    if (Response == null)
+                    {
+                        return NotFound("Product Not Found");
+                    }
+                    return Ok(Response);
                 }
                 else
                 {
@@ -83,7 +84,7 @@ namespace AplicacionWeb.Controllers
         }
 
         [HttpPost("AddProduct")]
-        public ActionResult<DtoProducts> AddProducts([FromBody] DtoProducts products)
+        public ActionResult<DtoProducts> AddProducts([FromBody] ProductsViewModel products)
         {
 
             try
@@ -138,7 +139,7 @@ namespace AplicacionWeb.Controllers
 
         }
         [HttpPut("ModifyProductById / {id}")]
-        public ActionResult <string> ModifyProductById(int id, Products product)
+        public ActionResult<string> ModifyProductById(int id, [FromBody] ProductsViewModel product)
         {
             try
             {

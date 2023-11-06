@@ -1,4 +1,6 @@
 ﻿using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.Entities;
+using ApplicationWeb.Data.ViewModel;
 using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +49,7 @@ namespace AplicacionWeb.Controllers
         }
 
         [HttpPost("AddUser")]
-        public ActionResult <DtoUser> AddUser(DtoUser user)
+        public ActionResult <UserViewModel> AddUser([FromBody] UserViewModel user)
         {
             string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
          
@@ -55,6 +57,8 @@ namespace AplicacionWeb.Controllers
                 if (role == "SuperAdmin")
                 {
                     var response = _SuperAdminService.AddUser(user);
+                    
+                    
                     if (response == null)
                     {
                         return Ok("Incomplete Data or existing user ");

@@ -16,8 +16,6 @@ namespace AplicacionWeb.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-
-    /// PROBANDO SI FUNCIONA EL AUTH DSP ORDENAR EN SUPERADMIN
     public class AuthenticateController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -29,37 +27,43 @@ namespace AplicacionWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([FromBody] AuthenticationRequestBody authenticationRequestBody)
+        public IActionResult Login([FromBody] DtoCredentials credentialsDto)
         {
-            Tuple<bool, DtoUser?> validationResponse = _authService.ValidateUser(authenticationRequestBody.Email, authenticationRequestBody.Password);
-            if (!validationResponse.Item1 && validationResponse.Item2 == null)
+            BaseResponse validationResponse = _authService.ValidateUser(credentialsDto.Email, credentialsDto.Password);
+            if (validationResponse.Message == "wrong email")
             {
-                return NotFound("Email no existente");
+                return BadRequest(validationResponse.Message);
             }
-            else if (!validationResponse.Item1 && validationResponse.Item2 != null)
-                return Unauthorized("Contraseña incorrecta");
+            else if (validationResponse.Message == "wrong password")
+            {
+                return Unauthorized("wrong password");
+            }
+            if (validationResponse.Result)
+            {
+                DtoUser user = _authService.GetByEmail(credentialsDto.Email);
 
-            var securityPassword = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Authentication:SecretForKey"]));
-            var credentials = new SigningCredentials(securityPassword, SecurityAlgorithms.HmacSha256);
 
-            var claimsForToken = new List<Claim>();
-            claimsForToken.Add(new Claim("sub", validationResponse.Item2.Email));
-            claimsForToken.Add(new Claim("Username", validationResponse.Item2.UserName));
-            claimsForToken.Add(new Claim("role", validationResponse.Item2.UserType)); // cambiar mas adelante
+                var securityPassword = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Authentication:SecretForKey"]));
+                var credentials = new SigningCredentials(securityPassword, SecurityAlgorithms.HmacSha256);
 
-            var jwtToken = new JwtSecurityToken(
-            _configuration["Authentication:Issuer"],
-            _configuration["Authentication:Audience"],
-            claimsForToken,
-            DateTime.UtcNow,
-            DateTime.UtcNow.AddHours(1),
-            credentials);
+                var claimsForToken = new List<Claim>();
+                claimsForToken.Add(new Claim("sub", user.Email));
+                claimsForToken.Add(new Claim("Username", user.UserName));
+                claimsForToken.Add(new Claim("role", user.UserType));
 
-            var tokenToReturn = new JwtSecurityTokenHandler()
-                .WriteToken(jwtToken);
+                var jwtToken = new JwtSecurityToken(
+                _configuration["Authentication:Issuer"],
+                _configuration["Authentication:Audience"],
+                claimsForToken,
+                DateTime.UtcNow,
+                DateTime.UtcNow.AddHours(1),
+                credentials);
 
-            return Ok(tokenToReturn);
+                var tokenToReturn = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+
+                return Ok(tokenToReturn);
+            }
+            return BadRequest();
         }
-
     }
 }

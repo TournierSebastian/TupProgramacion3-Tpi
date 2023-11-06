@@ -12,8 +12,8 @@ namespace Service.IService
     public interface IAuthService
     {
         public DtoUser? GetByEmail(string userEmail);
-        Task<bool> SaveChangesAsync();
-        void DeleteUser(DtoUser userToDeleteDto);
-        Tuple<bool, DtoUser?> ValidateUser(string? email, string? password);
+      
+        
+        public BaseResponse ValidateUser(string email, string password);
     }
 }

@@ -1,0 +1,24 @@
+1- Admin
+{
+  "email": "Admin@Admin.com",
+  "password": "Admin"
+}
+
+-SuperAdmin
+{
+  "email": "SuperAdmin@SuperAdmin.com",
+  "password": "SuperAdmin"
+}
+-Customer
+{
+  "email": "Customer@Customer.com",
+  "password": "Customer"
+}
+
+-otro customer
+{
+  "email": "sebastian.tounier@gmail.com",
+  "password": "sebastian123"
+}
+
+

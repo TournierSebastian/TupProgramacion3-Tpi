@@ -1,4 +1,5 @@
 ﻿using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -107,9 +108,10 @@ namespace AplicacionWeb.Controllers
             }
 
         }
-
-    [HttpPost("AddSellOrder/ {id}")]
-        public ActionResult<string> AddSellOrder([FromBody] DtoSellOrder orden, int id)
+      
+        [HttpPost("AddSellOrder/ {id}")]
+ 
+        public ActionResult<string> AddSellOrder(int id, [FromBody] SellOrderViewMode orden)
         {
             try
             {
@@ -117,13 +119,14 @@ namespace AplicacionWeb.Controllers
 
                 if (role == "Customer")
                 {
-                var response = _ICustomerService.AddSellOrder(id, orden);
+            
+                    var response = _ICustomerService.AddSellOrder(id, orden);
                 if (response == "Incomplete data")
                 {
                     return BadRequest("Incomplete Data");
                 }
-         
-                return Ok("Added Product");
+
+                    return Ok("Added Product");
                 }else{
                     return NotFound("Incorrect Role");
                 }

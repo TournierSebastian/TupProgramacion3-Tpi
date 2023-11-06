@@ -1,7 +1,10 @@
 ﻿
+using ApplicationWeb.Config;
 using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Entities;
+using ApplicationWeb.Data.ViewModel;
+using AutoMapper;
 using Service.IService;
 
 
@@ -10,25 +13,33 @@ namespace Service.Service
     public class AdminService : IAdminService
     {
         private readonly TiendaContext _TiendaContext;
-            
+        private readonly IMapper _mapper;
 
         public AdminService(TiendaContext TiendaContext)
         {
             _TiendaContext = TiendaContext;
+            _mapper = AutoMapperConfig.Configure();
         }
 
         
 
-        public DtoProducts AddProducts(DtoProducts products)
+        public DtoProducts AddProducts(ProductsViewModel products)
         {
             
             if (products == null || products.Name == "" || products.Descripcion == "" || products.Price == 0)
             {
                 return null;
             }
-            _TiendaContext.DtoProducts.Add(products);
+
+            var productos = new DtoProducts
+            {
+                Name = products.Name,
+                Price = products.Price,
+                Descripcion = products.Descripcion,
+            };
+            _TiendaContext.DtoProducts.Add(productos);
             _TiendaContext.SaveChanges();
-            return products;
+            return productos;
         }
         public List <DtoProducts> GetAllProducts()
         {
@@ -54,7 +65,7 @@ namespace Service.Service
 
         }
 
-        public string ModifyProductById(int id, Products product)
+        public string ModifyProductById(int id, ProductsViewModel product)
         {
             var productModify = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == id);
             if (product == null || product.Name == "" || product.Descripcion == "" || product.Price == 0)

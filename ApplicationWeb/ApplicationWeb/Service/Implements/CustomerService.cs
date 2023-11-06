@@ -1,7 +1,12 @@
 ﻿
+using ApplicationWeb.Config;
 using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.Entities;
+using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Service.Interfaces;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationWeb.Service.Implements
 {
@@ -9,24 +14,29 @@ namespace ApplicationWeb.Service.Implements
     {
 
         private readonly TiendaContext _TiendaContext;
+        private readonly IMapper _mapper;
         public CustomerService(TiendaContext context)
         {
             _TiendaContext = context;
+            _mapper = AutoMapperConfig.Configure();
         }
 
 
-        public string AddSellOrder(int id, DtoSellOrder orden)
+        public string AddSellOrder(int id, [FromBody] SellOrderViewMode Sellorden)
         {
             var product = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == id);
-            if (orden.PayMethod == "")
+          
+            if (Sellorden.PayMethod == "")
             {
                 return "Incomplete Data";
             }
-
-
-            orden.PayMethod = orden.PayMethod;
-            orden.TotalValue = product.Price;
-            _TiendaContext.Add(orden);
+            var user = new DtoSellOrder
+            {
+                TotalValue = product.Price,
+                PayMethod = Sellorden.PayMethod,
+            };
+          
+            _TiendaContext.Add(user);
             _TiendaContext.SaveChanges();
 
             return "Added SellOrder";
