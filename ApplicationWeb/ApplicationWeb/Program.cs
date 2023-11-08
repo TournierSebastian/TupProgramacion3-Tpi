@@ -67,10 +67,11 @@ builder.Services.AddAuthentication("Bearer")
 var app = builder.Build();
 
 #region Migration
-//using (var scope = app.Services.CreateScope())
-//{
-//    var context = scope.ServiceProvider.GetRequiredService<TiendaContext>();
-//}
+using (var scope = app.Services.CreateScope())
+{
+   var context = scope.ServiceProvider.GetRequiredService<TiendaContext>();
+    context.Database.Migrate();
+}
 
 #endregion
 

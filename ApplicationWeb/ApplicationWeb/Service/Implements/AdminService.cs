@@ -36,6 +36,7 @@ namespace Service.Service
                 Name = products.Name,
                 Price = products.Price,
                 Descripcion = products.Descripcion,
+                
             };
             _TiendaContext.DtoProducts.Add(productos);
             _TiendaContext.SaveChanges();

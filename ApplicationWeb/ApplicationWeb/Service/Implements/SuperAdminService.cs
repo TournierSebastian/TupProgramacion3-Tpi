@@ -56,6 +56,7 @@ namespace ApplicationWeb.Service.Implements
                 UserName = user.UserName,
                 Email = user.Email,
                 UserType = user.UserType,
+                Password = string.Empty,
              }).ToList();
 
             return users;

@@ -58,7 +58,7 @@ namespace ApplicationWeb.Service.Implements
                 return "Sell Order deleted";
 
             }
-
+                
         }
         public List<DtoSellOrder> GetallOrder()
         {
