@@ -2,12 +2,10 @@
 using ApplicationWeb.Config;
 using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Encrypt;
+using ApplicationWeb.Service.Interfaces;
 using AutoMapper;
-using Azure;
-using Service.IService;
 
 
 namespace ApplicationWeb.Service.Implements

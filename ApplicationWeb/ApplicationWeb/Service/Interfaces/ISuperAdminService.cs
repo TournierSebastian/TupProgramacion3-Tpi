@@ -1,7 +1,7 @@
 ﻿using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.ViewModel;
 
-namespace Service.IService
+namespace ApplicationWeb.Service.Interfaces
 {
     public interface ISuperAdminService
     {

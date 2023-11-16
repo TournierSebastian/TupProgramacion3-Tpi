@@ -3,12 +3,6 @@ using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Encrypt;
 using Service.IService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ApplicationWeb.Service.Implements
 {
     public class AuthService : IAuthService

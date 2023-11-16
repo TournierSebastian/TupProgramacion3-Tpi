@@ -2,7 +2,6 @@
 using ApplicationWeb.Config;
 using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.ViewModel;
 using AutoMapper;
 using Service.IService;

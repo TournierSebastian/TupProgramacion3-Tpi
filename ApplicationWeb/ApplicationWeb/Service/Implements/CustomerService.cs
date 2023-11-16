@@ -1,8 +1,6 @@
-﻿
-using ApplicationWeb.Config;
+﻿using ApplicationWeb.Config;
 using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Service.Interfaces;
 using AutoMapper;
@@ -16,7 +14,7 @@ namespace ApplicationWeb.Service.Implements
         private readonly TiendaContext _TiendaContext;
         private readonly IMapper _mapper;
         public CustomerService(TiendaContext context)
-        {
+        {   
             _TiendaContext = context;
             _mapper = AutoMapperConfig.Configure();
         }

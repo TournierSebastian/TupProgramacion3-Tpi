@@ -1,8 +1,6 @@
 ﻿using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Service.IService;
 using System.IdentityModel.Tokens.Jwt;
