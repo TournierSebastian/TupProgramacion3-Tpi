@@ -81,7 +81,7 @@ namespace AplicacionWeb.Controllers
 
 
         }
-        [HttpGet("GetOrderByid/{id}")]
+        [HttpGet("GetOrderByUserid/{id}")]
         public ActionResult<DtoSellOrder> GetOrderByUser(int id)
         {
             try
@@ -123,7 +123,7 @@ namespace AplicacionWeb.Controllers
                 var response = _ICustomerService.AddSellOrder(orden);
                 if (response == "Incomplete Data")
                 {
-                    return BadRequest("Incomplete Data");
+                    return BadRequest("Error in AddSellOrder ");
                 }
 
                 return Ok("Added SellOrder");

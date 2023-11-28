@@ -1,5 +1,6 @@
 ﻿using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.ViewModel;
 
 using ApplicationWeb.Service.Interfaces;
@@ -24,10 +25,14 @@ namespace ApplicationWeb.Service.Implements
             var product = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == Sellorden.Productid);
             var user = _TiendaContext.DtoUsers.FirstOrDefault(x => x.idUser == Sellorden.UserId);
 
-            if (Sellorden.PayMethod == "")
+         
+            if (product == null || user == null || product.Stock <= 0 || product.Stock < Sellorden.QuantityProducts||
+               Sellorden.PayMethod.ToUpper() != "EFECTIVO" && Sellorden.PayMethod.ToUpper() != "TARJETA")
             {
                 return "Incomplete Data";
             }
+
+           
             var orden = new DtoSellOrder
             {
 
@@ -42,6 +47,9 @@ namespace ApplicationWeb.Service.Implements
                 Email = user.Email,
                 Validation = true
             };
+
+
+            product.Stock = product.Stock - Sellorden.QuantityProducts;
             _TiendaContext.Add(orden);
             _TiendaContext.SaveChanges();
 
@@ -51,14 +59,18 @@ namespace ApplicationWeb.Service.Implements
         public string DeleteOrderByid(int orderid)
         {
             var order = _TiendaContext.DtoSellOrders.FirstOrDefault(x => x.idOrder == orderid);
+            
             string response = string.Empty;
 
             if (order == null)
             {
                 return "Sell Order not found";
             }
+       
             else
             {
+                var product = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == order.idProduct);
+                product.Stock += order.QuantityProducts;
                 _TiendaContext.Remove(order);
                 _TiendaContext.SaveChanges();
                 return "Sell Order deleted";
@@ -83,12 +95,12 @@ namespace ApplicationWeb.Service.Implements
 
             return order;
         }
-
+        
 
 
         public List<DtoProducts> GetAllProducts()
         {
-            var products = _TiendaContext.DtoProducts.ToList();
+            var products = _TiendaContext.DtoProducts.Where(product => product.Stock > 0).ToList();
             return products;
         }
     }
