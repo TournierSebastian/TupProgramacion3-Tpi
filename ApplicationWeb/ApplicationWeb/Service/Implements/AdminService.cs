@@ -1,7 +1,6 @@
 ﻿using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.ViewModel;
-using ApplicationWeb.Mapping;
 using AutoMapper;
 using Service.IService;
 
@@ -11,12 +10,11 @@ namespace Service.Service
     public class AdminService : IAdminService
     {
         private readonly TiendaContext _TiendaContext;
-        private readonly IMapper _mapper;
 
         public AdminService(TiendaContext TiendaContext)
         {
             _TiendaContext = TiendaContext;
-            _mapper = AutoMapperConfig.Configure();
+
         }
 
         

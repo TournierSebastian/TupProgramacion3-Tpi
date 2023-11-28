@@ -2,7 +2,7 @@
 using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Encrypt;
-using ApplicationWeb.Mapping;
+
 using ApplicationWeb.Service.Interfaces;
 using AutoMapper;
 
@@ -12,12 +12,12 @@ namespace ApplicationWeb.Service.Implements
     public class SuperAdminService : ISuperAdminService
     {
         private readonly TiendaContext _TiendaContext;
-        private readonly IMapper _mapper;
+
         public SuperAdminService(TiendaContext TiendaContext)
         {
     
             _TiendaContext = TiendaContext;
-            _mapper = AutoMapperConfig.Configure();
+     
 
         }
 
