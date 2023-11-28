@@ -31,7 +31,7 @@ namespace AplicacionWeb.Controllers
                 // if( role == "Customer")
                 // {
                 var Response = _ICustomerService.GetAllProducts();
-
+                
                 if (Response == null)
                 {
                     return NotFound("Products Not Found");
@@ -65,6 +65,7 @@ namespace AplicacionWeb.Controllers
 
                     return NotFound("Sell orders not found");
                 }
+
                 return Ok(response);
                 // }
                 // else
@@ -81,7 +82,7 @@ namespace AplicacionWeb.Controllers
 
         }
         [HttpGet("GetOrderByid/{id}")]
-        public ActionResult<DtoSellOrder> GetOrderById(int id)
+        public ActionResult<DtoSellOrder> GetOrderByUser(int id)
         {
             try
             {
@@ -89,7 +90,7 @@ namespace AplicacionWeb.Controllers
 
                 // if (role == "Customer")
                 // {        
-                var response = _ICustomerService.GetOrderById(id);
+                var response = _ICustomerService.GetOrderByUser(id);
                 if (response == null)
                 {
                     return NotFound("Sell order not found");

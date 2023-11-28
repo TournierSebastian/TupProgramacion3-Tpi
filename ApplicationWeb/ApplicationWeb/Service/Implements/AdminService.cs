@@ -57,6 +57,17 @@ namespace Service.Service
             {
                 return ("Product Not Found");            
             }
+
+     
+            var sellOrders = _TiendaContext.DtoSellOrders.Where(x => x.idProduct == id);
+
+   
+            foreach (var sellOrder in sellOrders)
+            {
+                sellOrder.Validation = false;
+            }
+
+
             _TiendaContext.Remove(products);
             _TiendaContext.SaveChanges();
             return ("Product Delete");

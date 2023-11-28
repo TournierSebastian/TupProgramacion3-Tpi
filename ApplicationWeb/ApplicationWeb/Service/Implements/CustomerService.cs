@@ -34,11 +34,13 @@ namespace ApplicationWeb.Service.Implements
                 PayMethod = Sellorden.PayMethod,
                 QuantityProducts = Sellorden.QuantityProducts,
                 TotalValue = product.Price * Sellorden.QuantityProducts,
+                idProduct = Sellorden.Productid,
                 Name = product.Name,
                 Price = product.Price,
                 Descripcion = product.Descripcion,
                 UserName = user.UserName,
                 Email = user.Email,
+                Validation = true
             };
             _TiendaContext.Add(orden);
             _TiendaContext.SaveChanges();
@@ -67,15 +69,17 @@ namespace ApplicationWeb.Service.Implements
         public List<DtoSellOrder> GetallOrder()
         {
 
-            var order = _TiendaContext.DtoSellOrders.ToList();
+
+            var order = _TiendaContext.DtoSellOrders.Where(order => order.Validation == true).ToList();
+
             return order;
 
         }
 
 
-        public DtoSellOrder GetOrderById(int id)
+        public DtoSellOrder GetOrderByUser(int id)
         {
-            var order = _TiendaContext.DtoSellOrders.FirstOrDefault(x => x.idOrder == id);
+            var order = _TiendaContext.DtoSellOrders.FirstOrDefault(x => x.idUser == id);
 
             return order;
         }
