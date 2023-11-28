@@ -2,7 +2,7 @@
 using ApplicationWeb.Mapping.Profiles;
 using AutoMapper;
 
-namespace ApplicationWeb.Config
+namespace ApplicationWeb.Mapping
 {
     public class AutoMapperConfig
     {

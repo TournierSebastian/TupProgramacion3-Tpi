@@ -3,5 +3,10 @@
     public class SellOrderViewMode
     {
         public string? PayMethod { get; set; }
+
+        public int QuantityProducts { get; set; }
+        public int Productid { get; set; }
+
+        public int UserId { get; set; }
     }
 }

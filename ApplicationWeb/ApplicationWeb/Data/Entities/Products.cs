@@ -9,5 +9,8 @@ namespace ApplicationWeb.Data.Entities
         public int Price { get; set; }
         public string? Descripcion { get; set; }
 
+
+        public int Stock { get; set; }
+
     }
 }

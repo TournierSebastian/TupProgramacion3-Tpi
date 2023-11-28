@@ -1,8 +1,7 @@
-﻿
-using ApplicationWeb.Config;
-using ApplicationWeb.Data;
+﻿using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.ViewModel;
+using ApplicationWeb.Mapping;
 using AutoMapper;
 using Service.IService;
 
@@ -25,7 +24,7 @@ namespace Service.Service
         public DtoProducts AddProducts(ProductsViewModel products)
         {
             
-            if (products == null || products.Name == "" || products.Descripcion == "" || products.Price == 0)
+            if (products == null || products.Name == "" || products.Descripcion == "" || products.Price == 0 || products.Stock == 0)
             {
                 return null;
             }
@@ -35,6 +34,7 @@ namespace Service.Service
                 Name = products.Name,
                 Price = products.Price,
                 Descripcion = products.Descripcion,
+                Stock = products.Stock,
                 
             };
             _TiendaContext.DtoProducts.Add(productos);

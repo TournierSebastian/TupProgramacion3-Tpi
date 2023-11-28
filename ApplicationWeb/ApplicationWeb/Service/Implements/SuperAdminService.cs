@@ -1,9 +1,8 @@
-﻿
-using ApplicationWeb.Config;
-using ApplicationWeb.Data;
+﻿using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Encrypt;
+using ApplicationWeb.Mapping;
 using ApplicationWeb.Service.Interfaces;
 using AutoMapper;
 
