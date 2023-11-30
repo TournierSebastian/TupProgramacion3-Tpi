@@ -28,7 +28,8 @@ namespace ApplicationWeb.Service.Implements
             .FirstOrDefault(u => u.UserName == user.UserName || u.Email == user.Email);
           
             if (user.Email.Contains("@") && user.Email.EndsWith(".com")
-              && user.UserName != "" && user.Password != "" && existingUser == null)
+              && user.UserName != "" && user.Password != "" && existingUser == null && user.UserType == "Customer" || user.UserType == "Admin" || user.UserType == "SuperAdmin")
+              
             {
 
                 var Users = new DtoUser
@@ -64,11 +65,19 @@ namespace ApplicationWeb.Service.Implements
         public string DeleteUserByid(int id)
         {
             var userid = _TiendaContext.DtoUsers.FirstOrDefault(x => x.idUser == id);
-
+    
             if (userid == null)
             {
                 return "User not found";
             }
+            var sellOrders = _TiendaContext.DtoSellOrders.Where(x => x.idUser == id).ToList();
+           
+                foreach (var order in sellOrders)
+                {
+                    order.Validation = false;
+                }
+
+  
 
             _TiendaContext.Remove(userid);
             _TiendaContext.SaveChanges();

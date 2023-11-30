@@ -82,9 +82,9 @@ namespace Service.Service
                 return (" Incomplete Data ");
             }
 
-            productModify.Name = product.Name;
             productModify.Descripcion = product.Descripcion;
             productModify.Price = product.Price;
+            productModify.Stock = product.Stock;
             _TiendaContext.SaveChanges();
             return ("Modified Product");
 

@@ -9,7 +9,7 @@ namespace ApplicationWeb.Service.Interfaces
 
         List<DtoSellOrder> GetallOrder();
 
-        DtoSellOrder GetOrderByUser(int id);
+        DtoSellOrder GetOrderByUserName(string UserName);
         string AddSellOrder(SellOrderViewMode orden);
         string DeleteOrderByid(int orderId);
         List<DtoProducts> GetAllProducts();

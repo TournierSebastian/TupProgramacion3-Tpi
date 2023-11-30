@@ -9,7 +9,7 @@ namespace AplicacionWeb.Controllers
 {
     [Route("api/Customer")]
     [ApiController]
-    // [Authorize]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _ICustomerService;
@@ -24,12 +24,12 @@ namespace AplicacionWeb.Controllers
         [HttpGet("GetAllProducts")]
         public ActionResult<List<DtoProducts>> GetAllProducts()
         {
-            // string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
+            string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
 
             try
             {
-                // if( role == "Customer")
-                // {
+                if( role == "Customer")
+                {
                 var Response = _ICustomerService.GetAllProducts();
                 
                 if (Response == null)
@@ -37,10 +37,10 @@ namespace AplicacionWeb.Controllers
                     return NotFound("Products Not Found");
                 }
                 return Ok(Response);
-                //}else
-                //{
-                //   return NotFound("Incorrect Role");
-                //}
+                }else
+                {
+                   return NotFound("Incorrect Role");
+                }
 
             }
             catch (Exception ex)
@@ -56,9 +56,9 @@ namespace AplicacionWeb.Controllers
         {
             try
             {
-                // string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
-                // if (role == "Customer")
-                // {
+                 string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
+                 if (role == "Customer")
+                 {
                 var response = _ICustomerService.GetallOrder();
                 if (response == null || response.Count == 0)
                 {
@@ -67,11 +67,11 @@ namespace AplicacionWeb.Controllers
                 }
 
                 return Ok(response);
-                // }
-                // else
-                // {
-                //     return NotFound("Incorrect Role");
-                // }
+                 }
+                 else
+                 {
+                     return NotFound("Incorrect Role");
+                 }
             }
             catch (Exception ex)
             {
@@ -81,25 +81,25 @@ namespace AplicacionWeb.Controllers
 
 
         }
-        [HttpGet("GetOrderByUserid/{id}")]
-        public ActionResult<DtoSellOrder> GetOrderByUser(int id)
+        [HttpGet("GetOrderByUserName/{UserName}")]
+        public ActionResult<DtoSellOrder> GetOrderByUserName(string UserName)
         {
             try
             {
-                // string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
+                string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
 
-                // if (role == "Customer")
-                // {        
-                var response = _ICustomerService.GetOrderByUser(id);
+                 if (role == "Customer")
+                {        
+                var response = _ICustomerService.GetOrderByUserName(UserName);
                 if (response == null)
                 {
                     return NotFound("Sell order not found");
                 }
                 return Ok(response);
-                // }
-                // else{
-                //    return NotFound("Incorrect Role");
-                //}
+                 }
+                 else{
+                    return NotFound("Incorrect Role");
+                }
             }
             catch (Exception ex)
             {
@@ -115,10 +115,10 @@ namespace AplicacionWeb.Controllers
         {
             try
             {
-                //string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
+                string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
 
-                //if (role == "Customer")
-                //{
+                if (role == "Customer")
+                {
 
                 var response = _ICustomerService.AddSellOrder(orden);
                 if (response == "Incomplete Data")
@@ -127,9 +127,9 @@ namespace AplicacionWeb.Controllers
                 }
 
                 return Ok("Added SellOrder");
-                //}else{
-                //    return NotFound("Incorrect Role");
-                // }
+                }else{
+                    return NotFound("Incorrect Role");
+                 }
             }
             catch (Exception ex)
             {
@@ -145,19 +145,19 @@ namespace AplicacionWeb.Controllers
             var response = _ICustomerService.DeleteOrderByid(orderid);
             try
             {
-                // string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
-                //if (role == "Customer")
-                //{
+                 string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
+                if (role == "Customer")
+                {
                 if (response == "Sell Order deleted")
                 {
                     return Ok("Sell Order deleted");
                 }
                 return NotFound("Sell Order not found");
-                // }
-                //else
-                //{
-                //     return NotFound("Incorrect Role");
-                // }
+                 }
+                else
+                {
+                     return NotFound("Incorrect Role");
+                  }
             }
             catch (Exception ex)
             {

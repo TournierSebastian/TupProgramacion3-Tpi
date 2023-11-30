@@ -23,7 +23,7 @@ namespace ApplicationWeb.Service.Implements
         public string AddSellOrder([FromBody] SellOrderViewMode Sellorden)
         {
             var product = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == Sellorden.Productid);
-            var user = _TiendaContext.DtoUsers.FirstOrDefault(x => x.idUser == Sellorden.UserId);
+            var user = _TiendaContext.DtoUsers.FirstOrDefault(x => x.UserName == Sellorden.UserName);
 
          
             if (product == null || user == null || product.Stock <= 0 || product.Stock < Sellorden.QuantityProducts||
@@ -43,6 +43,7 @@ namespace ApplicationWeb.Service.Implements
                 Name = product.Name,
                 Price = product.Price,
                 Descripcion = product.Descripcion,
+                idUser = user.idUser,
                 UserName = user.UserName,
                 Email = user.Email,
                 Validation = true
@@ -89,9 +90,9 @@ namespace ApplicationWeb.Service.Implements
         }
 
 
-        public DtoSellOrder GetOrderByUser(int id)
+        public DtoSellOrder GetOrderByUserName(string UserName)
         {
-            var order = _TiendaContext.DtoSellOrders.FirstOrDefault(x => x.idUser == id);
+            var order = _TiendaContext.DtoSellOrders.FirstOrDefault(x => x.UserName == UserName);
 
             return order;
         }
