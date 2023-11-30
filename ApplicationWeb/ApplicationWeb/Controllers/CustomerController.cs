@@ -82,7 +82,7 @@ namespace AplicacionWeb.Controllers
 
         }
         [HttpGet("GetOrderByUserName/{UserName}")]
-        public ActionResult<DtoSellOrder> GetOrderByUserName(string UserName)
+        public ActionResult<List<DtoSellOrder>> GetOrderByUserName(string UserName)
         {
             try
             {

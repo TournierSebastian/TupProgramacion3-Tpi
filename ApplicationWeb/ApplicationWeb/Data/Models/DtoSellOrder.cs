@@ -11,12 +11,11 @@ namespace ApplicationWeb.Data.Dto
 
         public int idOrder { get; set; }
         public string? PayMethod { get; set; }
-
+        public int QuantityProducts { get; set; }
         public int TotalValue { get; set; }
 
         [JsonIgnore]
         public int idProduct { get; set; }
-        public int QuantityProducts { get; set; }
         public string Name { get; set; }
 
         public int Price { get; set; }

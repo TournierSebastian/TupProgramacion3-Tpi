@@ -90,9 +90,9 @@ namespace ApplicationWeb.Service.Implements
         }
 
 
-        public DtoSellOrder GetOrderByUserName(string UserName)
+        public List<DtoSellOrder> GetOrderByUserName(string UserName)
         {
-            var order = _TiendaContext.DtoSellOrders.FirstOrDefault(x => x.UserName == UserName);
+            var order = _TiendaContext.DtoSellOrders.Where(x => x.UserName == UserName).ToList();
 
             return order;
         }
