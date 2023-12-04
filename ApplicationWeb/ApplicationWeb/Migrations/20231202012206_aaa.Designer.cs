@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplicationWeb.Migrations
 {
     [DbContext(typeof(TiendaContext))]
-    [Migration("20231106024534_EditSellOrder")]
-    partial class EditSellOrder
+    [Migration("20231202012206_aaa")]
+    partial class aaa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace ApplicationWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ApplicationWeb.Data.Dto.DtoProducts", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Dto.Products", b =>
                 {
                     b.Property<int>("idProducts")
                         .ValueGeneratedOnAdd()
@@ -43,12 +43,15 @@ namespace ApplicationWeb.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.HasKey("idProducts");
 
                     b.ToTable("DtoProducts");
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Dto.DtoSellOrder", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Dto.SellOrder", b =>
                 {
                     b.Property<int>("idOrder")
                         .ValueGeneratedOnAdd()
@@ -56,10 +59,39 @@ namespace ApplicationWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idOrder"));
 
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PayMethod")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityProducts")
+                        .HasColumnType("int");
+
                     b.Property<int>("TotalValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Validation")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("idProduct")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idUser")
                         .HasColumnType("int");
 
                     b.HasKey("idOrder");
@@ -67,7 +99,7 @@ namespace ApplicationWeb.Migrations
                     b.ToTable("DtoSellOrders");
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Dto.DtoUser", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Dto.User", b =>
                 {
                     b.Property<int>("idUser")
                         .ValueGeneratedOnAdd()
@@ -92,28 +124,54 @@ namespace ApplicationWeb.Migrations
 
                     b.ToTable("DtoUsers");
 
-                    b.HasDiscriminator<string>("UserType").HasValue("DtoUser");
+                    b.HasDiscriminator<string>("UserType").HasValue("User");
 
                     b.UseTphMappingStrategy();
+
+                    b.HasData(
+                        new
+                        {
+                            idUser = 1,
+                            Email = "SuperAdmin@SuperAdmin.com",
+                            Password = "f94d3a61fc4b322de134ab222d849e50f4a407f68d201ddd1ff44e57ee20339d",
+                            UserName = "SuperAdmin",
+                            UserType = "SuperAdmin"
+                        },
+                        new
+                        {
+                            idUser = 2,
+                            Email = "Admin@Admin.com",
+                            Password = "c1c224b03cd9bc7b6a86d77f5dace40191766c485cd55dc48caf9ac873335d6f",
+                            UserName = "Admin",
+                            UserType = "Admin"
+                        },
+                        new
+                        {
+                            idUser = 3,
+                            Email = "Customer@Customer.com",
+                            Password = "bf3763383aaf43069885db20b386631c6d5d8b8481df2a26769e9de5fe2f9c82",
+                            UserName = "Customer",
+                            UserType = "Customer"
+                        });
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Models.DtoAdmin", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Models.Admin", b =>
                 {
-                    b.HasBaseType("ApplicationWeb.Data.Dto.DtoUser");
+                    b.HasBaseType("ApplicationWeb.Data.Dto.User");
 
                     b.HasDiscriminator().HasValue("Admin");
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Models.DtoCustomer", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Models.Customer", b =>
                 {
-                    b.HasBaseType("ApplicationWeb.Data.Dto.DtoUser");
+                    b.HasBaseType("ApplicationWeb.Data.Dto.User");
 
                     b.HasDiscriminator().HasValue("Customer");
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Models.DtoSuperAdmin", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Models.SuperAdmin", b =>
                 {
-                    b.HasBaseType("ApplicationWeb.Data.Dto.DtoUser");
+                    b.HasBaseType("ApplicationWeb.Data.Dto.User");
 
                     b.HasDiscriminator().HasValue("SuperAdmin");
                 });

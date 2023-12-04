@@ -1,5 +1,6 @@
 ﻿
 using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.ViewModel;
 
 namespace ApplicationWeb.Service.Interfaces
@@ -9,10 +10,10 @@ namespace ApplicationWeb.Service.Interfaces
 
         List<DtoSellOrder> GetallOrder();
 
-        List<DtoSellOrder> GetOrderByUserName(string UserName);
+        List<DtoSellOrder> GetOrderByUserid(int id);
         string AddSellOrder(SellOrderViewMode orden);
         string DeleteOrderByid(int orderId);
-        List<DtoProducts> GetAllProducts();
+
 
     }
 

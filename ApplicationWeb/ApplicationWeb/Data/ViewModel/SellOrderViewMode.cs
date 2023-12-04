@@ -7,6 +7,6 @@
         public int QuantityProducts { get; set; }
         public int Productid { get; set; }
 
-        public string UserName { get; set; }
+        public int Userid { get; set; }
     }
 }

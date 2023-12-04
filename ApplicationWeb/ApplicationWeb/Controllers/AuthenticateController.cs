@@ -1,5 +1,6 @@
 ﻿using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Service.IService;
@@ -13,7 +14,7 @@ namespace AplicacionWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    
     public class AuthenticateController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -25,7 +26,7 @@ namespace AplicacionWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([FromBody] DtoCredentials credentialsDto)
+        public IActionResult Login([FromBody] Credentials credentialsDto)
         {
             BaseResponse validationResponse = _authService.ValidateUser(credentialsDto.Email, credentialsDto.Password);
             if (validationResponse.Message == "wrong email")
@@ -38,7 +39,7 @@ namespace AplicacionWeb.Controllers
             }
             if (validationResponse.Result)
             {
-                DtoUser user = _authService.GetByEmail(credentialsDto.Email);
+                User user = _authService.GetByEmail(credentialsDto.Email);
 
 
                 var securityPassword = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Authentication:SecretForKey"]));

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ApplicationWeb.Data.Dto
 {
-    public class DtoCredentials
+    public class Credentials
     {
         [EmailAddress]
         public string? Email { get; set; }

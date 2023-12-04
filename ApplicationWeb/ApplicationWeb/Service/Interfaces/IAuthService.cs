@@ -6,7 +6,7 @@ namespace Service.IService
 {
     public interface IAuthService
     {
-        public DtoUser? GetByEmail(string userEmail);
+        public User? GetByEmail(string userEmail);
       
         
         public BaseResponse ValidateUser(string email, string password);

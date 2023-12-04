@@ -1,5 +1,6 @@
 ﻿using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.ViewModel;
 using AutoMapper;
 using Service.IService;
@@ -19,7 +20,7 @@ namespace Service.Service
 
         
 
-        public DtoProducts AddProducts(ProductsViewModel products)
+        public Products AddProducts(ProductsViewModel products)
         {
             
             if (products == null || products.Name == "" || products.Descripcion == "" || products.Price == 0 || products.Stock == 0)
@@ -27,7 +28,7 @@ namespace Service.Service
                 return null;
             }
 
-            var productos = new DtoProducts
+            var productos = new Products
             {
                 Name = products.Name,
                 Price = products.Price,
@@ -35,31 +36,54 @@ namespace Service.Service
                 Stock = products.Stock,
                 
             };
-            _TiendaContext.DtoProducts.Add(productos);
+            _TiendaContext.Products.Add(productos);
             _TiendaContext.SaveChanges();
             return productos;
         }
-        public List <DtoProducts> GetAllProducts()
+        public List<DtoProducts> GetAllProducts()
         {
-             var products = _TiendaContext.DtoProducts.ToList();
-            return products;
+
+            List<DtoProducts> product = _TiendaContext.Products.Select(product => new DtoProducts
+            {
+                idProducts = product.idProducts,
+                Name = product.Name,
+                Price = product.Price,
+                Descripcion = product.Descripcion,
+                Stock = product.Stock,
+            }).ToList();
+
+            return product;
         }
-        public  DtoProducts GetProductsById(int id)
+        public List<DtoProducts> GetProductsById(int id)
         {
-            var productsId = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == id);
-            return productsId;
+            var productsId = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == id);
+
+            List<DtoProducts> Products = new List<DtoProducts>
+            {
+              new DtoProducts
+              {
+                 idProducts = productsId.idProducts,
+                 Name = productsId.Name,
+                 Price = productsId.Price,
+                 Descripcion = productsId.Descripcion,
+                 Stock = productsId.Stock,
+              }
+            };
+
+
+            return Products;
         }
 
         public string DeleteProductByID(int id)
         {
-            var products = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == id);
+            var products = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == id);
             if(products == null) 
             {
                 return ("Product Not Found");            
             }
 
      
-            var sellOrders = _TiendaContext.DtoSellOrders.Where(x => x.idProduct == id);
+            var sellOrders = _TiendaContext.SellOrders.Where(x => x.idProduct == id);
 
    
             foreach (var sellOrder in sellOrders)
@@ -76,7 +100,7 @@ namespace Service.Service
 
         public string ModifyProductById(int id, ProductsViewModel product)
         {
-            var productModify = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == id);
+            var productModify = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == id);
             if (product == null || product.Name == "" || product.Descripcion == "" || product.Price == 0)
             {
                 return (" Incomplete Data ");

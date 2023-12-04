@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplicationWeb.Migrations
 {
     [DbContext(typeof(TiendaContext))]
-    [Migration("20231128202028_edit")]
-    partial class edit
+    [Migration("20231202012510_InitDb")]
+    partial class InitDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace ApplicationWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ApplicationWeb.Data.Dto.DtoProducts", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Dto.Products", b =>
                 {
                     b.Property<int>("idProducts")
                         .ValueGeneratedOnAdd()
@@ -48,10 +48,10 @@ namespace ApplicationWeb.Migrations
 
                     b.HasKey("idProducts");
 
-                    b.ToTable("DtoProducts");
+                    b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Dto.DtoSellOrder", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Dto.SellOrder", b =>
                 {
                     b.Property<int>("idOrder")
                         .ValueGeneratedOnAdd()
@@ -96,10 +96,10 @@ namespace ApplicationWeb.Migrations
 
                     b.HasKey("idOrder");
 
-                    b.ToTable("DtoSellOrders");
+                    b.ToTable("SellOrders");
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Dto.DtoUser", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Dto.User", b =>
                 {
                     b.Property<int>("idUser")
                         .ValueGeneratedOnAdd()
@@ -122,9 +122,9 @@ namespace ApplicationWeb.Migrations
 
                     b.HasKey("idUser");
 
-                    b.ToTable("DtoUsers");
+                    b.ToTable("Users");
 
-                    b.HasDiscriminator<string>("UserType").HasValue("DtoUser");
+                    b.HasDiscriminator<string>("UserType").HasValue("User");
 
                     b.UseTphMappingStrategy();
 
@@ -155,23 +155,23 @@ namespace ApplicationWeb.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Models.DtoAdmin", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Models.Admin", b =>
                 {
-                    b.HasBaseType("ApplicationWeb.Data.Dto.DtoUser");
+                    b.HasBaseType("ApplicationWeb.Data.Dto.User");
 
                     b.HasDiscriminator().HasValue("Admin");
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Models.DtoCustomer", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Models.Customer", b =>
                 {
-                    b.HasBaseType("ApplicationWeb.Data.Dto.DtoUser");
+                    b.HasBaseType("ApplicationWeb.Data.Dto.User");
 
                     b.HasDiscriminator().HasValue("Customer");
                 });
 
-            modelBuilder.Entity("ApplicationWeb.Data.Models.DtoSuperAdmin", b =>
+            modelBuilder.Entity("ApplicationWeb.Data.Models.SuperAdmin", b =>
                 {
-                    b.HasBaseType("ApplicationWeb.Data.Dto.DtoUser");
+                    b.HasBaseType("ApplicationWeb.Data.Dto.User");
 
                     b.HasDiscriminator().HasValue("SuperAdmin");
                 });

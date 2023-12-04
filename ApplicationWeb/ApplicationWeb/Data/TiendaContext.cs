@@ -1,5 +1,4 @@
 ﻿using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.Models;
 using ApplicationWeb.Encrypt;
 using Microsoft.EntityFrameworkCore;
@@ -13,38 +12,38 @@ namespace ApplicationWeb.Data
         {
 
         }
-        public DbSet<DtoUser> DtoUsers { get; set; }
-        public DbSet<DtoAdmin> dtoAdmins { get; set; }
-        public DbSet<DtoCustomer> dtoCustomers { get; set; }
-        public DbSet<DtoSuperAdmin> dtoSuperAdmins { get; set; }
-        public DbSet<DtoProducts> DtoProducts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Admin> Admins { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<SuperAdmin> SuperAdmins { get; set; }
+        public DbSet<Products> Products { get; set; }
 
-        public DbSet<DtoSellOrder> DtoSellOrders { get; set; }
+        public DbSet<SellOrder> SellOrders { get; set; }
 
     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DtoUser>().HasDiscriminator(u => u.UserType);
+            modelBuilder.Entity<User>().HasDiscriminator(u => u.UserType);
 
 
-            modelBuilder.Entity<DtoSuperAdmin>()
-            .HasBaseType<DtoUser>()
+            modelBuilder.Entity<SuperAdmin>()
+            .HasBaseType<User>()
             .HasDiscriminator<string>("UserType")
              .HasValue("SuperAdmin");
 
-            modelBuilder.Entity<DtoAdmin>()
-          .HasBaseType<DtoUser>()
+            modelBuilder.Entity<Admin>()
+          .HasBaseType<User>()
           .HasDiscriminator<string>("UserType")
            .HasValue("Admin");
 
-            modelBuilder.Entity<DtoCustomer>()
-         .HasBaseType<DtoUser>()
+            modelBuilder.Entity<Customer>()
+         .HasBaseType<User>()
          .HasDiscriminator<string>("UserType")
           .HasValue("Customer");
 
 
-            modelBuilder.Entity<DtoUser>().HasData(new User
+            modelBuilder.Entity<User>().HasData(new User
             {
                 idUser = 1,
                 UserName = "SuperAdmin",
@@ -54,7 +53,7 @@ namespace ApplicationWeb.Data
             });
 
 
-            modelBuilder.Entity<DtoUser>().HasData(new User
+            modelBuilder.Entity<User>().HasData(new User
             {
                 idUser = 2,
                 UserName = "Admin",
@@ -62,7 +61,7 @@ namespace ApplicationWeb.Data
                 UserType = "Admin",
                 Password = "Admin".Hash()
             });
-            modelBuilder.Entity<DtoUser>().HasData(new User
+            modelBuilder.Entity<User>().HasData(new User
             {
                 idUser = 3,
                 UserName = "Customer",

@@ -1,6 +1,7 @@
 ﻿using ApplicationWeb.Data;
 using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Entities;
+using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.ViewModel;
 
 using ApplicationWeb.Service.Interfaces;
@@ -22,8 +23,8 @@ namespace ApplicationWeb.Service.Implements
 
         public string AddSellOrder([FromBody] SellOrderViewMode Sellorden)
         {
-            var product = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == Sellorden.Productid);
-            var user = _TiendaContext.DtoUsers.FirstOrDefault(x => x.UserName == Sellorden.UserName);
+            var product = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == Sellorden.Productid);
+            var user = _TiendaContext.Users.FirstOrDefault(x => x.idUser == Sellorden.Userid);
 
          
             if (product == null || user == null || product.Stock <= 0 || product.Stock < Sellorden.QuantityProducts||
@@ -33,7 +34,7 @@ namespace ApplicationWeb.Service.Implements
             }
 
            
-            var orden = new DtoSellOrder
+            var orden = new SellOrder
             {
 
                 PayMethod = Sellorden.PayMethod,
@@ -59,7 +60,7 @@ namespace ApplicationWeb.Service.Implements
 
         public string DeleteOrderByid(int orderid)
         {
-            var order = _TiendaContext.DtoSellOrders.FirstOrDefault(x => x.idOrder == orderid);
+            var order = _TiendaContext.SellOrders.FirstOrDefault(x => x.idOrder == orderid);
             
             string response = string.Empty;
 
@@ -70,7 +71,7 @@ namespace ApplicationWeb.Service.Implements
        
             else
             {
-                var product = _TiendaContext.DtoProducts.FirstOrDefault(x => x.idProducts == order.idProduct);
+                var product = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == order.idProduct);
                 product.Stock += order.QuantityProducts;
                 _TiendaContext.Remove(order);
                 _TiendaContext.SaveChanges();
@@ -83,26 +84,48 @@ namespace ApplicationWeb.Service.Implements
         {
 
 
-            var order = _TiendaContext.DtoSellOrders.Where(order => order.Validation == true).ToList();
+            //var order = _TiendaContext.SellOrders.Where(order => order.Validation == true)
 
+   
+            List<DtoSellOrder> order = _TiendaContext.SellOrders.Where(order => order.Validation == true).Select(order =>new DtoSellOrder
+            {
+                idOrder = order.idOrder,
+                PayMethod = order.PayMethod,
+                QuantityProducts = order.QuantityProducts,
+                TotalValue = order.TotalValue,
+                Name = order.Name,
+                Price = order.Price,
+                Descripcion = order.Descripcion,
+                UserName = order.UserName,
+                Email = order.Email
+
+            }).ToList();
+  
+        
             return order;
 
         }
 
 
-        public List<DtoSellOrder> GetOrderByUserName(string UserName)
+        public List<DtoSellOrder> GetOrderByUserid(int id)
         {
-            var order = _TiendaContext.DtoSellOrders.Where(x => x.UserName == UserName).ToList();
+
+            List<DtoSellOrder> order = _TiendaContext.SellOrders.Where(order => order.Validation == true && order.idUser == id).Select(order => new DtoSellOrder
+            {
+                idOrder = order.idOrder,
+                PayMethod = order.PayMethod,
+                QuantityProducts = order.QuantityProducts,
+                TotalValue = order.TotalValue,
+                Name = order.Name,
+                Price = order.Price,
+                Descripcion = order.Descripcion,
+                UserName = order.UserName,
+                Email = order.Email
+
+            }).ToList();
 
             return order;
         }
         
-
-
-        public List<DtoProducts> GetAllProducts()
-        {
-            var products = _TiendaContext.DtoProducts.Where(product => product.Stock > 0).ToList();
-            return products;
-        }
     }
 }

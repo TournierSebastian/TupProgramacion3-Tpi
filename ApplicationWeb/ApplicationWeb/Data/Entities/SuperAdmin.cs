@@ -1,6 +1,8 @@
-﻿namespace ApplicationWeb.Data.Entities
+﻿using ApplicationWeb.Data.Dto;
+
+namespace ApplicationWeb.Data.Models
 {
-    public class SuperAdmin : User
+    public class SuperAdmin: User
     {
     }
 }

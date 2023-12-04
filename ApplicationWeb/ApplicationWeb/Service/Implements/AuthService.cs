@@ -3,6 +3,8 @@ using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Encrypt;
 using Service.IService;
+
+
 namespace ApplicationWeb.Service.Implements
 {
     public class AuthService : IAuthService
@@ -17,7 +19,7 @@ namespace ApplicationWeb.Service.Implements
         {
 
             BaseResponse response = new BaseResponse();
-            DtoUser? userForLogin = _context.DtoUsers.SingleOrDefault(u => u.Email == email);
+            User? userForLogin = _context.Users.SingleOrDefault(u => u.Email == email);
             if (userForLogin != null)
             {
                 if (userForLogin.Password == password.Hash())
@@ -40,9 +42,9 @@ namespace ApplicationWeb.Service.Implements
             return response;
         }
 
-        public DtoUser? GetByEmail(string email)
+        public User? GetByEmail(string email)
         {
-            return _context.DtoUsers.SingleOrDefault(u => u.Email == email);
+            return _context.Users.SingleOrDefault(u => u.Email == email);
         }
 
     }
