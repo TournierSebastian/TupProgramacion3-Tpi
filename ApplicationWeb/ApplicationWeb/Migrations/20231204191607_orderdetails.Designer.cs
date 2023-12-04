@@ -3,6 +3,7 @@ using ApplicationWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplicationWeb.Migrations
 {
     [DbContext(typeof(TiendaContext))]
-    partial class TiendaContextModelSnapshot : ModelSnapshot
+    [Migration("20231204191607_orderdetails")]
+    partial class orderdetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,11 +59,25 @@ namespace ApplicationWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idOrder"));
 
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PayMethod")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityProducts")
+                        .HasColumnType("int");
 
                     b.Property<int>("TotalValue")
                         .HasColumnType("int");
@@ -70,6 +87,9 @@ namespace ApplicationWeb.Migrations
 
                     b.Property<bool>("Validation")
                         .HasColumnType("bit");
+
+                    b.Property<int>("idProduct")
+                        .HasColumnType("int");
 
                     b.Property<int>("idUser")
                         .HasColumnType("int");
@@ -155,12 +175,6 @@ namespace ApplicationWeb.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Productsid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuantityProducts")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SellOrderId")
                         .HasColumnType("int");
 
                     b.HasKey("OrderDetailsID");

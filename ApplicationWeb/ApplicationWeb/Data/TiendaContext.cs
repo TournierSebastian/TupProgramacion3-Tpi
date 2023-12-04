@@ -1,4 +1,5 @@
 ﻿using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.Models;
 using ApplicationWeb.Encrypt;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ namespace ApplicationWeb.Data
 
         public DbSet<SellOrder> SellOrders { get; set; }
 
-    
+        public DbSet<OrderDetails> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

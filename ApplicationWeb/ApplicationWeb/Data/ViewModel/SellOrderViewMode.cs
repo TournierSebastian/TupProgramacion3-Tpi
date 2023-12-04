@@ -4,9 +4,8 @@
     {
         public string? PayMethod { get; set; }
 
-        public int QuantityProducts { get; set; }
-        public int Productid { get; set; }
 
+        public List<OrderDetailsViewModel> Products { get; set; }
         public int Userid { get; set; }
     }
 }

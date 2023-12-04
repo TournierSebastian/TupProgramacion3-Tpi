@@ -43,7 +43,7 @@ namespace Service.Service
         public List<DtoProducts> GetAllProducts()
         {
 
-            List<DtoProducts> product = _TiendaContext.Products.Select(product => new DtoProducts
+            List<DtoProducts> product = _TiendaContext.Products.Where(x => x.Stock > 0 ).Select(product => new DtoProducts
             {
                 idProducts = product.idProducts,
                 Name = product.Name,
@@ -56,7 +56,7 @@ namespace Service.Service
         }
         public List<DtoProducts> GetProductsById(int id)
         {
-            var productsId = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == id);
+            var productsId = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == id && x.Stock > 0);
 
             List<DtoProducts> Products = new List<DtoProducts>
             {
@@ -83,12 +83,17 @@ namespace Service.Service
             }
 
      
-            var sellOrders = _TiendaContext.SellOrders.Where(x => x.idProduct == id);
-
+            var sellOrders = _TiendaContext.OrderDetails.Where(x => x.Productsid == id).ToList();
+               
+          
    
             foreach (var sellOrder in sellOrders)
             {
-                sellOrder.Validation = false;
+                var orden = _TiendaContext.SellOrders.FirstOrDefault(x=> x.idOrder == sellOrder.SellOrderId);
+                if (orden != null)
+                {
+                    orden.Validation = false;
+                }
             }
 
 

@@ -16,9 +16,6 @@ namespace ApplicationWeb.Data.Dto
 
         public int Stock { get; set; }
 
-        internal object Select(Func<object, DtoProducts> value)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
