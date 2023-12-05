@@ -4,7 +4,7 @@ using ApplicationWeb.Data.ViewModel;
 
 namespace ApplicationWeb.Service.Interfaces
 {
-    public interface ISuperAdminService
+    public interface IUserService
     {
         User AddUser(UserViewModel user);
         List<DtoUser> GetAllUser();

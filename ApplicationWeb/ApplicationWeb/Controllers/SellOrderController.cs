@@ -16,44 +16,14 @@ namespace ApplicationWeb.Controllers
     public class SellOrderController : ControllerBase
     {
 
-        private readonly ICustomerService _ICustomerService;
-        private readonly ILogger<CustomerController> _logger;
+        private readonly ISellOrderService _ICustomerService;
+        private readonly ILogger _logger;
 
-        public SellOrderController(ICustomerService ICustomerService, ILogger<CustomerController> looger)
+        public SellOrderController(ISellOrderService ICustomerService, ILogger<SellOrderController> looger)
         {
             _ICustomerService = ICustomerService;
             _logger = looger;
         }
-
-        [HttpGet("GetOrderByUserid/{id}")]
-        public ActionResult<List<SellOrder>> GetOrderByUserid(int id)
-        {
-            try
-            {
-                string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
-
-                if (role == "Customer")
-                {
-                    var response = _ICustomerService.GetOrderByUserid(id);
-                    if (response == null)
-                    {
-                        return NotFound("Sell order not found");
-                    }
-                    return Ok(response);
-                }
-                else
-                {
-                    return NotFound("Incorrect Role");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"An error occurred in GetOrderById: {ex}");
-                return BadRequest($"{ex.Message}");
-            }
-
-        }
-
 
 
         [HttpGet("GetAllOrders")]
@@ -85,6 +55,36 @@ namespace ApplicationWeb.Controllers
             }
 
         }
+        [HttpGet("GetOrderByUserid/{id}")]
+        public ActionResult<List<SellOrder>> GetOrderByUserid(int id)
+        {
+            try
+            {
+                string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
+
+                if (role == "Customer")
+                {
+                    var response = _ICustomerService.GetOrderByUserid(id);
+                    if (response == null)
+                    {
+                        return NotFound("Sell order not found");
+                    }
+                    return Ok(response);
+                }
+                else
+                {
+                    return NotFound("Incorrect Role");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error occurred in GetOrderById: {ex}");
+                return BadRequest($"{ex.Message}");
+            }
+
+        }
+
+
 
 
     [HttpPost("AddSellOrder")]

@@ -3,6 +3,7 @@ using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
@@ -11,14 +12,15 @@ namespace ApplicationWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
 
-        private readonly ISuperAdminService _SuperAdminService;
+        private readonly IUserService _SuperAdminService;
         private readonly ILogger _logger;
 
 
-        public UserController(ISuperAdminService superAdminService, ILogger<SuperAdminController> logger, IAuthService authService)
+        public UserController(IUserService superAdminService, ILogger<UserController> logger)
         {
             _SuperAdminService = superAdminService;
             _logger = logger;

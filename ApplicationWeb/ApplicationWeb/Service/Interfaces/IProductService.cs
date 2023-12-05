@@ -5,7 +5,7 @@ using ApplicationWeb.Data.ViewModel;
 
 namespace Service.IService
 {
-    public interface IAdminService
+    public interface IProductService
     {
 
         Products AddProducts(ProductsViewModel products); 

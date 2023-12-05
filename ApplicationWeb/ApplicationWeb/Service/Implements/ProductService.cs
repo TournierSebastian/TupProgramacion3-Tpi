@@ -8,11 +8,11 @@ using Service.IService;
 
 namespace Service.Service
 {
-    public class AdminService : IAdminService
+    public class ProductService : IProductService
     {
         private readonly TiendaContext _TiendaContext;
 
-        public AdminService(TiendaContext TiendaContext)
+        public ProductService(TiendaContext TiendaContext)
         {
             _TiendaContext = TiendaContext;
 

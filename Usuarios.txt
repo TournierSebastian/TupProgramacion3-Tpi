@@ -17,8 +17,41 @@
 
 -otro customer
 {
-  "email": "sebastian.tounier@gmail.com",
+  "email": "sebastian.tournier@gmail.com",
   "password": "sebastian123"
 }
 
 
+- orden de venta
+{
+  "payMethod": "Tarjeta",
+  "products": [
+    {
+      "quantityProducts": 1,
+      "productid": 1
+    },
+    {
+      "quantityProducts": 1,
+      "productid": 2
+    }
+  ],
+  "userid": 1
+}
+
+
+
+-Productos
+{
+  "name": "Remera Verde",
+  "price": 1000,
+  "descripcion": "Tela de buena calidad",
+  "stock": 6
+}
+
+-
+{
+  "name": "Camisa",
+  "price": 1500,
+  "descripcion": "Camisa con cuadros",
+  "stock": 10
+}

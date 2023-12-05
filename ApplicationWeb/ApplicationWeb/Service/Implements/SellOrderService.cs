@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationWeb.Service.Implements
 {
-    public class CustomerService : ICustomerService
+    public class SellOrderService : ISellOrderService
     {
 
         private readonly TiendaContext _TiendaContext;
       
-        public CustomerService(TiendaContext context)
+        public SellOrderService(TiendaContext context)
         {   
             _TiendaContext = context;
         }
@@ -26,7 +26,6 @@ namespace ApplicationWeb.Service.Implements
 
             using (var transaction = _TiendaContext.Database.BeginTransaction())
             {
-                //var product = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == Sellorden.Productid);
                 var user = _TiendaContext.Users.FirstOrDefault(x => x.idUser == Sellorden.Userid);
 
                 var orderDetailsList = new List<OrderDetails>();
@@ -57,8 +56,7 @@ namespace ApplicationWeb.Service.Implements
                 }
             
 
-                if (//product == null || user == null || product.Stock <= 0 || product.Stock < Sellorden.QuantityProducts||
-                   Sellorden.PayMethod.ToUpper() != "EFECTIVO" && Sellorden.PayMethod.ToUpper() != "TARJETA" || user == null)
+                if (Sellorden.PayMethod.ToUpper() != "EFECTIVO" && Sellorden.PayMethod.ToUpper() != "TARJETA" || user == null)
                 {
                     return "Incomplete Data";
                 }
@@ -68,13 +66,6 @@ namespace ApplicationWeb.Service.Implements
                 {
 
                     PayMethod = Sellorden.PayMethod,
-
-                    ///////TotalValue = product.Price * Sellorden.QuantityProducts,
-                    //QuantityProducts = Sellorden.QuantityProducts,
-                    //idProduct = Sellorden.Productid,
-                    //Name = product.Name,
-                    //Price = product.Price,
-                    //Descripcion = product.Descripcion,
                     idUser = user.idUser,
                     UserName = user.UserName,
                     Email = user.Email,
@@ -82,9 +73,6 @@ namespace ApplicationWeb.Service.Implements
                     TotalValue = totalValue
                     
                 };
-
-
-                //// product.Stock = product.Stock - Sellorden.QuantityProducts;
                 _TiendaContext.Add(orden);
 
                 _TiendaContext.SaveChanges();
@@ -108,18 +96,28 @@ namespace ApplicationWeb.Service.Implements
         public string DeleteOrderByid(int orderid)
         {
             var order = _TiendaContext.SellOrders.FirstOrDefault(x => x.idOrder == orderid);
-            
-            string response = string.Empty;
 
-            if (order == null)
+            var orderDetails = _TiendaContext.OrderDetails.Where(x => x.SellOrderId == orderid).ToList();
+
+            
+
+            if (order == null || orderDetails == null)
             {
                 return "Sell Order not found";
             }
        
             else
             {
-                //var product = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == order.idProduct);
-                //product.Stock += order.QuantityProducts;
+                foreach(var x in orderDetails)
+                {
+                    var product = _TiendaContext.Products.FirstOrDefault(producto => producto.idProducts == x.Productsid);
+                    if(product != null) 
+                    {
+                        product.Stock += x.QuantityProducts;
+                    }
+                }
+                
+                _TiendaContext.RemoveRange(orderDetails);
                 _TiendaContext.Remove(order);
                 _TiendaContext.SaveChanges();
                 return "Sell Order deleted";
@@ -129,10 +127,6 @@ namespace ApplicationWeb.Service.Implements
         }
         public List<DtoSellOrder> GetallOrder()
         {
-
-
-            //var order = _TiendaContext.SellOrders.Where(order => order.Validation == true)
-
 
             List<DtoSellOrder> orders = _TiendaContext.SellOrders
                     .Where(order => order.Validation == true)

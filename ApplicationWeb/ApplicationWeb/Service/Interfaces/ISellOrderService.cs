@@ -5,7 +5,7 @@ using ApplicationWeb.Data.ViewModel;
 
 namespace ApplicationWeb.Service.Interfaces
 {
-    public interface ICustomerService
+    public interface ISellOrderService
     {
 
         List<DtoSellOrder> GetallOrder();

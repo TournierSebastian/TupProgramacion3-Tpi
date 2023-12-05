@@ -37,9 +37,9 @@ builder.Services.AddSwaggerGen(setupAction =>
 
 #region Inyeccion de dependencia
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ISuperAdminService, SuperAdminService>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
-builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ISellOrderService, SellOrderService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 #endregion
 

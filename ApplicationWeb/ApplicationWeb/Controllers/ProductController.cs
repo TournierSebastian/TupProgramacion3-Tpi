@@ -2,6 +2,7 @@
 using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
@@ -10,15 +11,16 @@ namespace ApplicationWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
 
 
-        private readonly IAdminService _AdminService;
+        private readonly IProductService _AdminService;
 
         private readonly ILogger _logger;
 
-        public ProductController(IAdminService adminService, ILogger<AdminController> logger)
+        public ProductController(IProductService adminService, ILogger<ProductController> logger)
         {
             _logger = logger;
             _AdminService = adminService;

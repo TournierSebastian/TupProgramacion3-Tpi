@@ -10,11 +10,11 @@ using AutoMapper;
 
 namespace ApplicationWeb.Service.Implements
 {
-    public class SuperAdminService : ISuperAdminService
+    public class UserService : IUserService
     {
         private readonly TiendaContext _TiendaContext;
 
-        public SuperAdminService(TiendaContext TiendaContext)
+        public UserService(TiendaContext TiendaContext)
         {
     
             _TiendaContext = TiendaContext;
