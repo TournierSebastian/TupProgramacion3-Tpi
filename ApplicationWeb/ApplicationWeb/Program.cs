@@ -1,5 +1,7 @@
 using ApplicationWeb;
 using ApplicationWeb.Data;
+using ApplicationWeb.Data.Repository;
+using ApplicationWeb.Data.Repository.Interfaces;
 using ApplicationWeb.Repository;
 using ApplicationWeb.Service.Implements;
 using ApplicationWeb.Service.Interfaces;
@@ -41,8 +43,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISellOrderService, SellOrderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<SellOrderRepository>();
-builder.Services.AddScoped<ProductsRepository>();
+builder.Services.AddScoped<ISellOrderRepository, SellOrderRepository>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 #endregion
 
 #region Data Base

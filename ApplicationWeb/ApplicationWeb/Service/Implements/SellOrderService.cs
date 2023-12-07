@@ -2,14 +2,13 @@
 using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.Models;
+using ApplicationWeb.Data.Repository.Interfaces;
 using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Repository;
 using ApplicationWeb.Service.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Drawing.Text;
+
 
 namespace ApplicationWeb.Service.Implements
 {
@@ -18,8 +17,8 @@ namespace ApplicationWeb.Service.Implements
 
         private readonly TiendaContext _TiendaContext;
         private readonly IMapper _mapper;
-        private readonly SellOrderRepository _SellOrderRepository;
-        public SellOrderService(TiendaContext context, IMapper mapper, SellOrderRepository sellOrderRepository)
+        private readonly ISellOrderRepository _SellOrderRepository;
+        public SellOrderService(TiendaContext context, IMapper mapper, ISellOrderRepository sellOrderRepository)
         {
             _TiendaContext = context;
             _mapper = mapper;
@@ -82,18 +81,16 @@ namespace ApplicationWeb.Service.Implements
 
         public string DeleteOrderByid(int orderid)
         {
-            var orders = _SellOrderRepository.GetSellOrder();
-            var order = orders.FirstOrDefault(x => x.idOrder == orderid);
-
-
-            if (order == null)
+            var orders = _SellOrderRepository.GetSellOrderByid(orderid);
+  
+            if (orders == null)
             {
                 return "Sell Order not found";
             }
 
             else
             {
-                foreach (var x in order.OrdenDetails)
+                foreach (var x in orders.OrdenDetails)
                 {
                     var product = _TiendaContext.Products.FirstOrDefault(producto => producto.idProducts == x.Productsid);
                     if (product != null)
@@ -104,7 +101,7 @@ namespace ApplicationWeb.Service.Implements
 
                 }
                 
-                _TiendaContext.Remove(order);
+                _TiendaContext.Remove(orders);
                 _TiendaContext.SaveChanges();
                 return "Sell Order deleted";
 
@@ -115,20 +112,7 @@ namespace ApplicationWeb.Service.Implements
         public List<DtoSellOrderGet> GetallOrder()
         {
             var orders = _SellOrderRepository.GetSellOrder();
-            List<DtoSellOrderGet> SellOrder = orders
-                .Where(order => order.Validation == true)
-                .Select(order => new DtoSellOrderGet
-                {
-                    idOrder = order.idOrder,
-                    PayMethod = order.PayMethod,
-                    TotalValue = order.TotalValue,
-                    UserName = order.UserName,
-                    Email = order.Email,
-                    OrdenDetails = order.OrdenDetails
-
-                }).ToList();
-
-            return SellOrder;
+            return orders;
 
         }
 
@@ -136,22 +120,8 @@ namespace ApplicationWeb.Service.Implements
         public List<DtoSellOrderGet> GetOrderByUserid(int id)
         {
 
-            var orders = _SellOrderRepository.GetSellOrder();
-
-            List<DtoSellOrderGet> SellOrder = orders
-                    .Where(order => order.Validation == true && order.idUser == id)
-                    .Select(order => new DtoSellOrderGet
-                    {
-                        idOrder = order.idOrder,
-                        PayMethod = order.PayMethod,
-                        TotalValue = order.TotalValue,
-                        UserName = order.UserName,
-                        Email = order.Email,
-                        OrdenDetails = order.OrdenDetails,
-                   
-                    })
-                    .ToList();
-            return SellOrder;
+            var orders = _SellOrderRepository.GetOrderByUserid(id);
+            return orders;
         }
         
     }

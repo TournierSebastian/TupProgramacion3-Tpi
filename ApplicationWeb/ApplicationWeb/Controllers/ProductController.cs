@@ -60,7 +60,7 @@ namespace ApplicationWeb.Controllers
         }
 
         [HttpGet("GetProductsByid/{id}")]
-        public ActionResult<List<DtoProducts>> GetProductsById(int id)
+        public ActionResult<Products> GetProductsById(int id)
         {
             try
             {
