@@ -81,7 +81,9 @@ namespace Service.Service
 
         public string DeleteProductByID(int id)
         {
-            var products = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == id);
+
+            var productos = _productsRepository.GetProducts();
+            var products = productos.FirstOrDefault(x => x.idProducts == id);
             if(products == null) 
             {
                 return ("Product Not Found");            
@@ -109,7 +111,8 @@ namespace Service.Service
 
         public string ModifyProductById(int id, ProductsViewModel product)
         {
-            var productModify = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == id);
+            var products = _productsRepository.GetProducts();
+            var productModify = products.FirstOrDefault(x => x.idProducts == id);
             if (product == null || product.Name == "" || product.Descripcion == "" || product.Price == 0)
             {
                 return (" Incomplete Data ");
