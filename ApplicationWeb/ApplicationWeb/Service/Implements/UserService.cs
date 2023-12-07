@@ -13,31 +13,32 @@ namespace ApplicationWeb.Service.Implements
     public class UserService : IUserService
     {
         private readonly TiendaContext _TiendaContext;
+        private readonly IMapper _mapper;
 
-        public UserService(TiendaContext TiendaContext)
+        public UserService(IMapper mapper,TiendaContext TiendaContext)
         {
     
             _TiendaContext = TiendaContext;
-     
+            _mapper = mapper;
 
         }
 
 
-        public List<DtoUser> GetAllUser()
+        public List<DtoUserGet> GetAllUser()
         {
-            List<DtoUser> users = _TiendaContext.Users.Select(user => new DtoUser
+            List<DtoUserGet> users = _TiendaContext.Users.Select(user => new DtoUserGet
             {
                 idUser = user.idUser,
                 UserName = user.UserName,
                 Email = user.Email,
                 UserType = user.UserType,
-             }).ToList();
+             }).ToList();   
 
             return users;
 
         }
 
-        public User AddUser(UserViewModel user)
+        public DtoUser AddUser(UserViewModel user)
         {
 
             var existingUser = _TiendaContext.Users
@@ -48,16 +49,20 @@ namespace ApplicationWeb.Service.Implements
 
             {
 
-                var Users = new User
-                {
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    Password = user.Password.Hash(),
-                    UserType = user.UserType,
-                };
+                //var Users = new User
+                //{
+                //    UserName = user.UserName,
+                //    Email = user.Email,
+                //    Password = user.Password.Hash(),
+                //    UserType = user.UserType,
+                //};
+
+                User Users;
+                Users = _mapper.Map<User>(user);
+                Users.Password = user.Password.Hash();
                 _TiendaContext.Users.Add(Users);
                 _TiendaContext.SaveChanges();
-                return Users;
+                return _mapper.Map<DtoUser>(Users);
             }
             return null;
         }

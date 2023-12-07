@@ -2,6 +2,7 @@
 using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.ViewModel;
+using ApplicationWeb.Repository;
 using AutoMapper;
 using Service.IService;
 
@@ -11,16 +12,19 @@ namespace Service.Service
     public class ProductService : IProductService
     {
         private readonly TiendaContext _TiendaContext;
-
-        public ProductService(TiendaContext TiendaContext)
+        private readonly IMapper _mapper;
+        private readonly  ProductsRepository _productsRepository;
+        public ProductService(TiendaContext TiendaContext, IMapper mapper, ProductsRepository productsRepository)
         {
             _TiendaContext = TiendaContext;
+            _mapper = mapper;
+            _productsRepository = productsRepository;
 
         }
 
         
 
-        public Products AddProducts(ProductsViewModel products)
+        public string AddProducts(ProductsViewModel products)
         {
             
             if (products == null || products.Name == "" || products.Descripcion == "" || products.Price == 0 || products.Stock == 0)
@@ -28,22 +32,21 @@ namespace Service.Service
                 return null;
             }
 
-            var productos = new Products
-            {
-                Name = products.Name,
-                Price = products.Price,
-                Descripcion = products.Descripcion,
-                Stock = products.Stock,
-                
-            };
-            _TiendaContext.Products.Add(productos);
+
+            Products productos;
+
+            productos = _mapper.Map<Products>(products);
+
+
+            _TiendaContext.Add(productos);
             _TiendaContext.SaveChanges();
-            return productos;
+            return "Product Added";
+
         }
         public List<DtoProducts> GetAllProducts()
         {
-
-            List<DtoProducts> product = _TiendaContext.Products.Where(x => x.Stock > 0 ).Select(product => new DtoProducts
+            var products = _productsRepository.GetProducts();
+            List<DtoProducts> product = products.Where(x => x.Stock > 0 ).Select(product => new DtoProducts
             {
                 idProducts = product.idProducts,
                 Name = product.Name,
@@ -56,7 +59,9 @@ namespace Service.Service
         }
         public List<DtoProducts> GetProductsById(int id)
         {
-            var productsId = _TiendaContext.Products.FirstOrDefault(x => x.idProducts == id && x.Stock > 0);
+
+            var products = _productsRepository.GetProducts();
+            var productsId = products.FirstOrDefault(x => x.idProducts == id && x.Stock > 0);
 
             List<DtoProducts> Products = new List<DtoProducts>
             {
@@ -82,18 +87,17 @@ namespace Service.Service
                 return ("Product Not Found");            
             }
 
-     
-            var sellOrders = _TiendaContext.OrderDetails.Where(x => x.Productsid == id).ToList();
-               
-          
-   
+
+
+
+            
+            var sellOrders = _TiendaContext.SellOrders
+          .Where(order =>  order.OrdenDetails.Any(od => od.Productsid == id))
+        .ToList();
+
             foreach (var sellOrder in sellOrders)
             {
-                var orden = _TiendaContext.SellOrders.FirstOrDefault(x=> x.idOrder == sellOrder.SellOrderId);
-                if (orden != null)
-                {
-                    orden.Validation = false;
-                }
+                 sellOrder.Validation = false;
             }
 
 

@@ -21,7 +21,6 @@ namespace ApplicationWeb.Data
 
         public DbSet<SellOrder> SellOrders { get; set; }
 
-        public DbSet<OrderDetails> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

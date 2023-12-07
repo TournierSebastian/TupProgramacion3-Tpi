@@ -1,5 +1,6 @@
 using ApplicationWeb;
 using ApplicationWeb.Data;
+using ApplicationWeb.Repository;
 using ApplicationWeb.Service.Implements;
 using ApplicationWeb.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +41,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISellOrderService, SellOrderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
-
+builder.Services.AddScoped<SellOrderRepository>();
+builder.Services.AddScoped<ProductsRepository>();
 #endregion
 
 #region Data Base
@@ -64,7 +66,7 @@ builder.Services.AddAuthentication("Bearer")
     }
 );
 
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 
 #region Migration

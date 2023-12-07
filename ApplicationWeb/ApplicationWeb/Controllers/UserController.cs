@@ -29,7 +29,7 @@ namespace ApplicationWeb.Controllers
             
         [HttpGet("GetAllUser")]
 
-        public ActionResult<List<DtoUser>> GetAllUser()
+        public ActionResult<List<DtoUserGet>> GetAllUser()
         {
             string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
             try
@@ -50,7 +50,7 @@ namespace ApplicationWeb.Controllers
         }
 
         [HttpPost("AddUser")]
-        public ActionResult<UserViewModel> AddUser([FromBody] UserViewModel user)
+        public ActionResult<DtoUser> AddUser([FromBody] UserViewModel user)
         {
             string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
 
@@ -63,7 +63,7 @@ namespace ApplicationWeb.Controllers
 
                     if (response == null)
                     {
-                        return Ok("Incomplete Data or existing user ");
+                        return BadRequest("Incomplete Data or existing user ");
                     }
                     return Ok("Added User");
                 }

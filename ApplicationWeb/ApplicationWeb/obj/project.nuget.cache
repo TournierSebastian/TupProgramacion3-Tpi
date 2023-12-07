@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "2YxUEZQz/S++jHJx3HVlrhpLiHBdLsJDXYF7sqdmjtIKi9Q6hL7H9mhj8dEkPh7IMw04CF7LLxe3taucZM/rbQ==",
+  "dgSpecHash": "7m2zBXk1mo8W1G36OE3LkmIHFYyx2PkWup6Nl92JSN5vdWZ3wVI3YnK9YOS8rQDnAON7nc0Nk0LaefosEVVR+Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\sebas\\Desktop\\TupProgramacion3-Tpi\\ApplicationWeb\\ApplicationWeb\\ApplicationWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\sebas\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\sebas\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\sebas\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\sebas\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\sebas\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

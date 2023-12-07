@@ -8,9 +8,9 @@ namespace ApplicationWeb.Service.Interfaces
     public interface ISellOrderService
     {
 
-        List<DtoSellOrder> GetallOrder();
+        List<DtoSellOrderGet> GetallOrder();
 
-        List<DtoSellOrder> GetOrderByUserid(int id);
+        List<DtoSellOrderGet> GetOrderByUserid(int id);
         string AddSellOrder(SellOrderViewMode orden);
         string DeleteOrderByid(int orderId);
 

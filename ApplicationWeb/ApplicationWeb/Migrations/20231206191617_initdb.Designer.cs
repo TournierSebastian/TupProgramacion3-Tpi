@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplicationWeb.Migrations
 {
     [DbContext(typeof(TiendaContext))]
-    [Migration("20231204191607_orderdetails")]
-    partial class orderdetails
+    [Migration("20231206191617_initdb")]
+    partial class initdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,25 +59,11 @@ namespace ApplicationWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idOrder"));
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PayMethod")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuantityProducts")
-                        .HasColumnType("int");
 
                     b.Property<int>("TotalValue")
                         .HasColumnType("int");
@@ -87,9 +73,6 @@ namespace ApplicationWeb.Migrations
 
                     b.Property<bool>("Validation")
                         .HasColumnType("bit");
-
-                    b.Property<int>("idProduct")
-                        .HasColumnType("int");
 
                     b.Property<int>("idUser")
                         .HasColumnType("int");
@@ -177,7 +160,15 @@ namespace ApplicationWeb.Migrations
                     b.Property<int>("Productsid")
                         .HasColumnType("int");
 
+                    b.Property<int>("QuantityProducts")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SellOrderId")
+                        .HasColumnType("int");
+
                     b.HasKey("OrderDetailsID");
+
+                    b.HasIndex("SellOrderId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -201,6 +192,20 @@ namespace ApplicationWeb.Migrations
                     b.HasBaseType("ApplicationWeb.Data.Dto.User");
 
                     b.HasDiscriminator().HasValue("SuperAdmin");
+                });
+
+            modelBuilder.Entity("ApplicationWeb.Data.Entities.OrderDetails", b =>
+                {
+                    b.HasOne("ApplicationWeb.Data.Dto.SellOrder", null)
+                        .WithMany("OrdenDetails")
+                        .HasForeignKey("SellOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ApplicationWeb.Data.Dto.SellOrder", b =>
+                {
+                    b.Navigation("OrdenDetails");
                 });
 #pragma warning restore 612, 618
         }

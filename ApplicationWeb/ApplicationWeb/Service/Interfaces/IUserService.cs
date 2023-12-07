@@ -6,8 +6,8 @@ namespace ApplicationWeb.Service.Interfaces
 {
     public interface IUserService
     {
-        User AddUser(UserViewModel user);
-        List<DtoUser> GetAllUser();
+        DtoUser AddUser(UserViewModel user);
+        List<DtoUserGet> GetAllUser();
         string DeleteUserByid(int id);
 
     }

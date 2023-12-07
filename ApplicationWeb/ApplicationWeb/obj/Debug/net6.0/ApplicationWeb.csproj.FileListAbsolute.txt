@@ -179,3 +179,4 @@ C:\Users\sebas\Desktop\TupProgramacion3-Tpi\ApplicationWeb\ApplicationWeb\obj\De
 C:\Users\sebas\Desktop\TupProgramacion3-Tpi\ApplicationWeb\ApplicationWeb\obj\Debug\net6.0\ApplicationWeb.genruntimeconfig.cache
 C:\Users\sebas\Desktop\TupProgramacion3-Tpi\ApplicationWeb\ApplicationWeb\obj\Debug\net6.0\ref\ApplicationWeb.dll
 C:\Users\sebas\Desktop\TupProgramacion3-Tpi\ApplicationWeb\ApplicationWeb\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\sebas\Desktop\TupProgramacion3-Tpi\ApplicationWeb\ApplicationWeb\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

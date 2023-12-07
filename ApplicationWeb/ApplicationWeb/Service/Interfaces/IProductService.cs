@@ -8,7 +8,7 @@ namespace Service.IService
     public interface IProductService
     {
 
-        Products AddProducts(ProductsViewModel products); 
+        string AddProducts(ProductsViewModel products); 
         List<DtoProducts> GetAllProducts();
         List<DtoProducts> GetProductsById(int id);
         string DeleteProductByID(int id);

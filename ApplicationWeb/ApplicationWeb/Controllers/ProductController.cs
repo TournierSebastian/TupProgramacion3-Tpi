@@ -89,7 +89,7 @@ namespace ApplicationWeb.Controllers
         }
 
         [HttpPost("AddProduct")]
-        public ActionResult<Products> AddProducts([FromBody] ProductsViewModel products)
+        public ActionResult<String> AddProducts([FromBody] ProductsViewModel products)
         {
 
             try

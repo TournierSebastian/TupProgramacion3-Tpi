@@ -27,7 +27,7 @@ namespace ApplicationWeb.Controllers
 
 
         [HttpGet("GetAllOrders")]
-        public ActionResult<List<DtoSellOrder>> GetallOrder()
+        public ActionResult<List<DtoSellOrderGet>> GetallOrder()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace ApplicationWeb.Controllers
                 if (role == "Customer")
                 {
                     var response = _ICustomerService.GetallOrder();
-                    if (response == null || response.Count == 0)
+                    if (response == null)
                     {
 
                         return NotFound("Sell orders not found");
@@ -56,7 +56,7 @@ namespace ApplicationWeb.Controllers
 
         }
         [HttpGet("GetOrderByUserid/{id}")]
-        public ActionResult<List<SellOrder>> GetOrderByUserid(int id)
+        public ActionResult<List<DtoSellOrderGet>> GetOrderByUserid(int id)
         {
             try
             {

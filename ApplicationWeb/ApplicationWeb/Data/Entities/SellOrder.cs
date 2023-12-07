@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using ApplicationWeb.Migrations;
+
+using ApplicationWeb.Data.Entities;
 
 namespace ApplicationWeb.Data.Dto
 {
@@ -32,6 +33,7 @@ namespace ApplicationWeb.Data.Dto
    
         public bool Validation { get; set; }
 
+        public ICollection<OrderDetails> OrdenDetails { get; set; } = new List<OrderDetails>();
 
 
     }

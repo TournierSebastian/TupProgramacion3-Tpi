@@ -165,6 +165,8 @@ namespace ApplicationWeb.Migrations
 
                     b.HasKey("OrderDetailsID");
 
+                    b.HasIndex("SellOrderId");
+
                     b.ToTable("OrderDetails");
                 });
 
@@ -187,6 +189,20 @@ namespace ApplicationWeb.Migrations
                     b.HasBaseType("ApplicationWeb.Data.Dto.User");
 
                     b.HasDiscriminator().HasValue("SuperAdmin");
+                });
+
+            modelBuilder.Entity("ApplicationWeb.Data.Entities.OrderDetails", b =>
+                {
+                    b.HasOne("ApplicationWeb.Data.Dto.SellOrder", null)
+                        .WithMany("OrdenDetails")
+                        .HasForeignKey("SellOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ApplicationWeb.Data.Dto.SellOrder", b =>
+                {
+                    b.Navigation("OrdenDetails");
                 });
 #pragma warning restore 612, 618
         }
