@@ -1,10 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-using ApplicationWeb.Data.Entities;
-
-namespace ApplicationWeb.Data.Dto
+namespace ApplicationWeb.Data.Entities
 {
     public class SellOrder
     {

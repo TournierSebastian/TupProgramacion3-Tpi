@@ -1,6 +1,6 @@
 ﻿namespace ApplicationWeb.Data.Models
 {
-    public class DtoProducts
+    public class ProductsDto
     {
         public int idProducts { get; set; }
         public string Name { get; set; }

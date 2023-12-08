@@ -1,6 +1,7 @@
 ﻿using ApplicationWeb.Data;
-using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.Models;
+using ApplicationWeb.Data.Repository.Interfaces;
 using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Encrypt;
 
@@ -14,62 +15,55 @@ namespace ApplicationWeb.Service.Implements
     {
         private readonly TiendaContext _TiendaContext;
         private readonly IMapper _mapper;
-
-        public UserService(IMapper mapper,TiendaContext TiendaContext)
+        private readonly IUserRepository _UserRepository;
+        public UserService(IMapper mapper,TiendaContext TiendaContext, IUserRepository userRepository)
         {
     
             _TiendaContext = TiendaContext;
             _mapper = mapper;
+            _UserRepository = userRepository;
 
         }
 
 
-        public List<DtoUserGet> GetAllUser()
+        public List<UserGetDto> GetAllUser()
         {
-            List<DtoUserGet> users = _TiendaContext.Users.Select(user => new DtoUserGet
+            List<UserGetDto> users = _UserRepository.GetallUser().Select(user => new UserGetDto
             {
                 idUser = user.idUser,
                 UserName = user.UserName,
                 Email = user.Email,
                 UserType = user.UserType,
              }).ToList();   
+      
+           
 
             return users;
 
         }
 
-        public DtoUser AddUser(UserViewModel user)
+        public UserDto AddUser(UserViewModel user)
         {
 
-            var existingUser = _TiendaContext.Users
-            .FirstOrDefault(u => u.UserName == user.UserName || u.Email == user.Email);
+            var existingUser = _UserRepository.GetUser(user.Email, user.UserName);
 
             if (user.Email.Contains("@") && user.Email.EndsWith(".com")
               && user.UserName != "" && user.Password != "" && existingUser == null && user.UserType == "Customer" || user.UserType == "Admin" || user.UserType == "SuperAdmin")
 
             {
-
-                //var Users = new User
-                //{
-                //    UserName = user.UserName,
-                //    Email = user.Email,
-                //    Password = user.Password.Hash(),
-                //    UserType = user.UserType,
-                //};
-
                 User Users;
                 Users = _mapper.Map<User>(user);
                 Users.Password = user.Password.Hash();
                 _TiendaContext.Users.Add(Users);
                 _TiendaContext.SaveChanges();
-                return _mapper.Map<DtoUser>(Users);
+                return _mapper.Map<UserDto>(Users);
             }
             return null;
         }
 
         public string DeleteUserByid(int id)
         {
-            var userid = _TiendaContext.Users.FirstOrDefault(x => x.idUser == id);
+            var userid = _UserRepository.GetUserByid(id);
     
             if (userid == null)
             {

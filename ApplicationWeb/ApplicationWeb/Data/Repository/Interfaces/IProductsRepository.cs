@@ -1,5 +1,5 @@
-﻿using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Models;
+﻿
+using ApplicationWeb.Data.Entities;
 
 namespace ApplicationWeb.Data.Repository.Interfaces
 {

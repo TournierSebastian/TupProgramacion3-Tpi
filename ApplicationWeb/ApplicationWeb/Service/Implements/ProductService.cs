@@ -1,10 +1,7 @@
 ﻿using ApplicationWeb.Data;
-using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Models;
-using ApplicationWeb.Data.Repository;
+using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.Repository.Interfaces;
 using ApplicationWeb.Data.ViewModel;
-using ApplicationWeb.Repository;
 using AutoMapper;
 using Service.IService;
 

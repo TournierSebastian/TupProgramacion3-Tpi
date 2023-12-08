@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using ApplicationWeb.Data.Dto;
 
 namespace ApplicationWeb.Data.Entities
 {

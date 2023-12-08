@@ -1,6 +1,4 @@
-﻿using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Entities;
-using Microsoft.AspNetCore.Authorization;
+﻿using ApplicationWeb.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Service.IService;

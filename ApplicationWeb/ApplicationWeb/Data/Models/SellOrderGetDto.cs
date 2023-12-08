@@ -2,7 +2,7 @@
 
 namespace ApplicationWeb.Data.Models
 {
-    public class DtoSellOrderGet
+    public class SellOrderGetDto
     {
 
         public int idOrder { get; set; }

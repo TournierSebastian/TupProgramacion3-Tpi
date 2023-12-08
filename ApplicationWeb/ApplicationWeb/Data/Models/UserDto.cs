@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿
 
 namespace ApplicationWeb.Data.Models
 {
-    public class DtoUser
+    public class UserDto
     {
 
             public int idUser { get; set; }

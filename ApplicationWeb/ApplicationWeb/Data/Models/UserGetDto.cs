@@ -1,6 +1,6 @@
 ﻿namespace ApplicationWeb.Data.Models
 {
-    public class DtoUserGet
+    public class UserGetDto
     {
 
         public int idUser { get; set; }

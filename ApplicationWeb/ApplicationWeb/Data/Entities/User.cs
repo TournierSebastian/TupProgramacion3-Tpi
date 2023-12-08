@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace ApplicationWeb.Data.Dto
+namespace ApplicationWeb.Data.Entities
 {
     public class User
     {

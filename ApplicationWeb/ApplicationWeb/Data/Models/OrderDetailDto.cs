@@ -1,6 +1,6 @@
 ﻿namespace ApplicationWeb.Data.Models
 {
-    public class DtoOrderDetail
+    public class OrderDetailDto
     {
         public int Productsid { get; set; }
         public int QuantityProducts { get; set; }

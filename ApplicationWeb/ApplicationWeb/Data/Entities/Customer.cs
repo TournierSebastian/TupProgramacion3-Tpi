@@ -1,6 +1,6 @@
-﻿using ApplicationWeb.Data.Dto;
+﻿
 
-namespace ApplicationWeb.Data.Models
+namespace ApplicationWeb.Data.Entities
 {
     public class Customer: User
     {

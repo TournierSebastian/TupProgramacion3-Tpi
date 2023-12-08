@@ -1,12 +1,13 @@
-﻿using ApplicationWeb.Data.Dto;
+﻿
+using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.Models;
 
 namespace ApplicationWeb.Data.Repository.Interfaces
 {
     public interface ISellOrderRepository
     {
-        List<DtoSellOrderGet> GetSellOrder();
-        List<DtoSellOrderGet> GetOrderByUserid(int id);
+        List<SellOrderGetDto> GetSellOrder();
+        List<SellOrderGetDto> GetOrderByUserid(int id);
 
         SellOrder GetSellOrderByid(int id);
     }

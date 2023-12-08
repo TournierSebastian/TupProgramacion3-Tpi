@@ -1,10 +1,8 @@
 ﻿using ApplicationWeb.Data;
-using ApplicationWeb.Data.Dto;
 using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.Repository.Interfaces;
 using ApplicationWeb.Data.ViewModel;
-using ApplicationWeb.Repository;
 using ApplicationWeb.Service.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -28,11 +26,13 @@ namespace ApplicationWeb.Service.Implements
 
         public string AddSellOrder([FromBody] SellOrderViewMode Sellorden)
         {
+           
             var user = _TiendaContext.Users.FirstOrDefault(x => x.idUser == Sellorden.Userid);
 
                 var orderDetailsList = new List<OrderDetails>();
                 int totalValue = 0;
                 SellOrder orden;
+          
                 orden = _mapper.Map<SellOrder>(Sellorden);           
                 orden.idUser = user.idUser;
                 orden.UserName = user.UserName;
@@ -109,7 +109,7 @@ namespace ApplicationWeb.Service.Implements
         }
                 
       
-        public List<DtoSellOrderGet> GetallOrder()
+        public List<SellOrderGetDto> GetallOrder()
         {
             var orders = _SellOrderRepository.GetSellOrder();
             return orders;
@@ -117,7 +117,7 @@ namespace ApplicationWeb.Service.Implements
         }
 
 
-        public List<DtoSellOrderGet> GetOrderByUserid(int id)
+        public List<SellOrderGetDto> GetOrderByUserid(int id)
         {
 
             var orders = _SellOrderRepository.GetOrderByUserid(id);

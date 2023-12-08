@@ -1,9 +1,6 @@
-﻿using AplicacionWeb.Controllers;
-using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Models;
+﻿using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.ViewModel;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 

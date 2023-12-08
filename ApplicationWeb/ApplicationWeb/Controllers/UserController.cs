@@ -1,12 +1,8 @@
-﻿using AplicacionWeb.Controllers;
-using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Models;
+﻿using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.ViewModel;
 using ApplicationWeb.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Service.IService;
 
 namespace ApplicationWeb.Controllers
 {
@@ -29,7 +25,7 @@ namespace ApplicationWeb.Controllers
             
         [HttpGet("GetAllUser")]
 
-        public ActionResult<List<DtoUserGet>> GetAllUser()
+        public ActionResult<List<UserGetDto>> GetAllUser()
         {
             string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
             try
@@ -37,6 +33,10 @@ namespace ApplicationWeb.Controllers
                 if (role == "SuperAdmin")
                 {
                     var response = _SuperAdminService.GetAllUser();
+                    if (response == null)
+                    {
+                        return BadRequest("User Not Found");
+                    }
                     return response;
                 }
                 return NotFound("Incorrect Role");
@@ -50,7 +50,7 @@ namespace ApplicationWeb.Controllers
         }
 
         [HttpPost("AddUser")]
-        public ActionResult<DtoUser> AddUser([FromBody] UserViewModel user)
+        public ActionResult<UserDto> AddUser([FromBody] UserViewModel user)
         {
             string role = User.Claims.SingleOrDefault(x => x.Type.Contains("role")).Value;
 

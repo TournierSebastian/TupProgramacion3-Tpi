@@ -1,6 +1,5 @@
-﻿using ApplicationWeb.Data.Dto;
+﻿
 using ApplicationWeb.Data.Entities;
-using ApplicationWeb.Data.Models;
 using ApplicationWeb.Encrypt;
 using Microsoft.EntityFrameworkCore;
 

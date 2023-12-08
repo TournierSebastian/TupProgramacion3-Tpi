@@ -1,11 +1,7 @@
-﻿using AplicacionWeb.Controllers;
-using ApplicationWeb.Data.Dto;
-using ApplicationWeb.Data.Models;
+﻿using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.ViewModel;
-using ApplicationWeb.Service.Implements;
 using ApplicationWeb.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationWeb.Controllers
@@ -27,7 +23,7 @@ namespace ApplicationWeb.Controllers
 
 
         [HttpGet("GetAllOrders")]
-        public ActionResult<List<DtoSellOrderGet>> GetallOrder()
+        public ActionResult<List<SellOrderGetDto>> GetallOrder()
         {
             try
             {
@@ -56,7 +52,7 @@ namespace ApplicationWeb.Controllers
 
         }
         [HttpGet("GetOrderByUserid/{id}")]
-        public ActionResult<List<DtoSellOrderGet>> GetOrderByUserid(int id)
+        public ActionResult<List<SellOrderGetDto>> GetOrderByUserid(int id)
         {
             try
             {

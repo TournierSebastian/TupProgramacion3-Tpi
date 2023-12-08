@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using ApplicationWeb.Data.Dto;
+﻿
 using ApplicationWeb.Data.Entities;
 
     namespace ApplicationWeb.Data.Models
     {
-        public class DtoSellOrder
+        public class SellOrderDto
         {
 
 

@@ -1,8 +1,7 @@
 ﻿using ApplicationWeb.Data;
-using ApplicationWeb.Data.Dto;
+using ApplicationWeb.Data.Entities;
 using ApplicationWeb.Data.Models;
 using ApplicationWeb.Data.Repository.Interfaces;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationWeb.Repository
@@ -17,12 +16,12 @@ namespace ApplicationWeb.Repository
 
         }
 
-        public List<DtoSellOrderGet> GetSellOrder()
+        public List<SellOrderGetDto> GetSellOrder()
         {
             var Orders = _TiendaContext.SellOrders.Include(order => order.OrdenDetails).ToList();
-            List<DtoSellOrderGet> SellOrder = Orders
+            List<SellOrderGetDto> SellOrder = Orders
            .Where(order => order.Validation == true)
-           .Select(order => new DtoSellOrderGet
+           .Select(order => new SellOrderGetDto
            {
                idOrder = order.idOrder,
                PayMethod = order.PayMethod,
@@ -36,11 +35,11 @@ namespace ApplicationWeb.Repository
         }
 
 
-        public List<DtoSellOrderGet> GetOrderByUserid(int id)
+        public List<SellOrderGetDto> GetOrderByUserid(int id)
         {
-            List<DtoSellOrderGet> SellOrder = _TiendaContext.SellOrders
+            List<SellOrderGetDto> SellOrder = _TiendaContext.SellOrders
               .Where(order => order.Validation == true && order.idUser == id)
-              .Select(order => new DtoSellOrderGet
+              .Select(order => new SellOrderGetDto
               {
                   idOrder = order.idOrder,
                   PayMethod = order.PayMethod,
